@@ -38,9 +38,6 @@ let selectedRating = 0;
 // Data mobil sport dengan 10 unit untuk setiap kategori
 const carsData = [
     // Family Cars (10 mobil)
-// Data mobil sport dengan 10 unit untuk setiap kategori
-const carsData = [
-    // Family Cars (10 mobil)
     {
         id: 1,
         name: "Porsche 911 Carrera",
