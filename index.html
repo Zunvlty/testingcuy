@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportCar Rentals - Sewa Mobil Sport Terpercaya</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h2><i class="fas fa-car"></i> SportCar Rentals</h2>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="#home" class="nav-link">Beranda</a></li>
+                    <li class="nav-item"><a href="#cars" class="nav-link">Mobil</a></li>
+                    <li class="nav-item"><a href="#services" class="nav-link">Layanan</a></li>
+                    <li class="nav-item"><a href="#testimonials" class="nav-link">Testimoni</a></li>
+                    <li class="nav-item"><a href="#locations" class="nav-link">Lokasi</a></li>
+                    <li class="nav-item"><a href="#contact" class="nav-link">Kontak</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Sewa Mobil Sport Terpercaya & Terjangkau</h1>
+                <p>Dapatkan mobil sport berkualitas dengan harga terbaik untuk perjalanan Anda. Proses mudah, cepat, dan terpercaya.</p>
+                <div class="hero-buttons">
+                    <a href="#cars" class="btn-primary">Lihat Katalog</a>
+                    <a href="#booking" class="btn-secondary">Booking Instan</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <h3>30+</h3>
+                        <p>Mobil Sport</p>
+                    </div>
+                    <div class="stat">
+                        <h3>1000+</h3>
+                        <p>Pelanggan</p>
+                    </div>
+                    <div class="stat">
+                        <h3>25+</h3>
+                        <p>Testimoni</p>
+                    </div>
+                    <div class="stat">
+                        <h3>24/7</h3>
+                        <p>Layanan</p>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Mobil Sport">
+            </div>
+        </div>
+    </section>
+
+    <!-- Cars Section -->
+    <section id="cars" class="cars">
+        <div class="container">
+            <h2 class="section-title">Koleksi Mobil Sport Kami</h2>
+            <p class="section-subtitle">Pilih mobil sport impian Anda untuk disewa - Total 30 unit tersedia</p>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="family">Family (10 Mobil)</button>
+                <button class="filter-btn" data-filter="travel">Travel (10 Mobil)</button>
+                <button class="filter-btn" data-filter="supercar">Supercar (10 Mobil)</button>
+            </div>
+            
+            <div class="cars-grid" id="cars-container">
+                <!-- Cars will be loaded by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking" class="booking">
+        <div class="container">
+            <h2 class="section-title">Booking Instan</h2>
+            <p class="section-subtitle">Proses mobil hanya dalam 3 menit - Langsung terhubung ke WhatsApp</p>
+            
+            <div class="booking-form">
+                <div class="form-group">
+                    <label for="car-select">Pilih Mobil</label>
+                    <select id="car-select">
+                        <option value="">-- Pilih Mobil --</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pickup-date">Tanggal Pengambilan</label>
+                        <input type="date" id="pickup-date">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="return-date">Tanggal Pengembalian</label>
+                        <input type="date" id="return-date">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pickup-location">Lokasi Pengambilan</label>
+                        <select id="pickup-location">
+                            <optgroup label="Jawa Barat">
+                                <option value="jakarta">Jakarta</option>
+                                <option value="bandung">Bandung</option>
+                                <option value="bogor">Bogor</option>
+                                <option value="depok">Depok</option>
+                                <option value="bekasi">Bekasi</option>
+                            </optgroup>
+                            <optgroup label="Jawa Tengah">
+                                <option value="semarang">Semarang</option>
+                                <option value="solo">Solo</option>
+                                <option value="yogyakarta">Yogyakarta</option>
+                                <option value="magelang">Magelang</option>
+                                <option value="pekalongan">Pekalongan</option>
+                            </optgroup>
+                            <optgroup label="Jawa Timur">
+                                <option value="surabaya">Surabaya</option>
+                                <option value="malang">Malang</option>
+                                <option value="sidoarjo">Sidoarjo</option>
+                                <option value="kediri">Kediri</option>
+                                <option value="jember">Jember</option>
+                            </optgroup>
+                            <optgroup label="Lainnya">
+                                <option value="bali">Bali</option>
+                                <option value="lombok">Lombok</option>
+                                <option value="medan">Medan</option>
+                                <option value="palembang">Palembang</option>
+                                <option value="makassar">Makassar</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customer-name">Nama Lengkap</label>
+                        <input type="text" id="customer-name" placeholder="Masukkan nama lengkap">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="customer-phone">Nomor WhatsApp</label>
+                        <input type="tel" id="customer-phone" placeholder="Contoh: 085136236798">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="rental-days">Lama Sewa (hari)</label>
+                        <input type="number" id="rental-days" min="1" value="1">
+                    </div>
+                </div>
+                
+                <button id="calculate-price" class="btn-primary">Hitung Harga</button>
+                
+                <div id="price-result" class="price-result">
+                    <!-- Price will be displayed here -->
+                </div>
+                
+                <button id="confirm-booking" class="btn-primary" disabled>
+                    <i class="fab fa-whatsapp"></i> Booking via WhatsApp
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Layanan Kami</h2>
+            <p class="section-subtitle">Kami memberikan pengalaman terbaik untuk penyewaan mobil sport</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Asuransi Lengkap</h3>
+                    <p>Semua mobil dilengkapi dengan asuransi komprehensif untuk keamanan perjalanan Anda.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-concierge-bell"></i>
+                    </div>
+                    <h3>Layanan 24/7</h3>
+                    <p>Tim support kami siap membantu Anda kapan saja, 24 jam sehari, 7 hari seminggu.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3>Kondisi Prima</h3>
+                    <p>Semua mobil dalam kondisi terbaik dengan perawatan rutin dan pemeriksaan berkala.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3>Delivery Service</h3>
+                    <p>Kami antar mobil ke lokasi Anda di seluruh Pulau Jawa dan sekitarnya.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Locations Section -->
+    <section id="locations" class="locations">
+        <div class="container">
+            <h2 class="section-title">Layanan di Seluruh Pulau Jawa</h2>
+            <p class="section-subtitle">Kami melayani penyewaan mobil sport di berbagai wilayah di Jawa</p>
+            
+            <div class="locations-grid">
+                <div class="location-card">
+                    <div class="location-icon">
+                        <i class="fas fa-map"></i>
+                    </div>
+                    <h3>Jawa Barat</h3>
+                    <p>5 lokasi strategis di wilayah Jawa Barat</p>
+                    <span class="car-count">12+ Mobil Tersedia</span>
+                </div>
+                
+                <div class="location-card">
+                    <div class="location-icon">
+                        <i class="fas fa-map"></i>
+                    </div>
+                    <h3>Jawa Tengah</h3>
+                    <p>5 lokasi strategis di wilayah Jawa Tengah</p>
+                    <span class="car-count">10+ Mobil Tersedia</span>
+                </div>
+                
+                <div class="location-card">
+                    <div class="location-icon">
+                        <i class="fas fa-map"></i>
+                    </div>
+                    <h3>Jawa Timur</h3>
+                    <p>5 lokasi strategis di wilayah Jawa Timur</p>
+                    <span class="car-count">12+ Mobil Tersedia</span>
+                </div>
+                
+                <div class="location-card">
+                    <div class="location-icon">
+                        <i class="fas fa-map"></i>
+                    </div>
+                    <h3>Area Lainnya</h3>
+                    <p>5 lokasi lainnya di sekitar Jawa</p>
+                    <span class="car-count">8+ Mobil Tersedia</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2 class="section-title">Testimoni Pelanggan</h2>
+            <p class="section-subtitle">Dengan 25+ review dari pelanggan puas di seluruh Jawa</p>
+            
+            <div class="testimonials-slider">
+                <div class="testimonial-card active">
+                    <div class="testimonial-content">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"Pengalaman menyewa Porsche 911 sangat memuaskan. Mobil dalam kondisi prima dan prosesnya cepat. Akan sewa lagi!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Customer">
+                        <div>
+                            <h4>Andi Wijaya</h4>
+                            <span>Jakarta</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p>"Layanan delivery sangat membantu. Ferrari 488 diantarkan tepat waktu dan sesuai ekspektasi. Recommended!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Customer">
+                        <div>
+                            <h4>Sarah Putri</h4>
+                            <span>Bandung</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"Harga kompetitif dengan kondisi mobil yang sangat baik. Proses booking mudah dan staff sangat membantu."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/76.jpg" alt="Customer">
+                        <div>
+                            <h4>Rizky Pratama</h4>
+                            <span>Surabaya</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-dots">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+            </div>
+            
+            <div class="testimonials-stats">
+                <div class="testimonial-stat">
+                    <h3>4.8/5</h3>
+                    <p>Rating Average</p>
+                </div>
+                <div class="testimonial-stat">
+                    <h3>25+</h3>
+                    <p>Testimoni</p>
+                </div>
+                <div class="testimonial-stat">
+                    <h3>95%</h3>
+                    <p>Kepuasan Pelanggan</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Hubungi Kami</h2>
+            <p class="section-subtitle">Butuh bantuan? Tim kami siap membantu Anda</p>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h3>Kantor Pusat</h3>
+                            <p>Jl. Sudirman No. 123, Jakarta Pusat</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div>
+                            <h3>Telepon</h3>
+                            <p>+62 21 1234 5678</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div>
+                            <h3>WhatsApp</h3>
+                            <p>0851 3623 6798</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h3>Email</h3>
+                            <p>info@sportcarrentals.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <h3>Jam Operasional</h3>
+                            <p>24/7 Setiap Hari</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" placeholder="Nama Lengkap" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="email" id="email" placeholder="Alamat Email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="text" id="subject" placeholder="Subjek" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <textarea id="message" rows="5" placeholder="Pesan Anda" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary">Kirim Pesan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-car"></i> SportCar Rentals</h3>
+                    <p>Penyedia layanan sewa mobil sport terpercaya dengan koleksi terlengkap dan harga terjangkau. Melayani seluruh Pulau Jawa dan sekitarnya.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Beranda</a></li>
+                        <li><a href="#cars">Mobil</a></li>
+                        <li><a href="#services">Layanan</a></li>
+                        <li><a href="#testimonials">Testimoni</a></li>
+                        <li><a href="#locations">Lokasi</a></li>
+                        <li><a href="#contact">Kontak</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Kategori Mobil</h3>
+                    <ul>
+                        <li><a href="#" data-filter="family">Family (10 Mobil)</a></li>
+                        <li><a href="#" data-filter="travel">Travel (10 Mobil)</a></li>
+                        <li><a href="#" data-filter="supercar">Supercar (10 Mobil)</a></li>
+                        <li><a href="#" data-filter="all">Semua Mobil</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Area Layanan</h3>
+                    <ul>
+                        <li><a href="#">Jawa Barat</a></li>
+                        <li><a href="#">Jawa Tengah</a></li>
+                        <li><a href="#">Jawa Timur</a></li>
+                        <li><a href="#">Sekitar Jawa</a></li>
+                        <li><a href="#">Delivery Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 SportCar Rentals. All Rights Reserved. | Melayani Sewa Mobil Sport di Seluruh Pulau Jawa dan Sekitarnya</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+  </html>
