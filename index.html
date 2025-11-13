@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - LowRen Car's</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.css" rel="stylesheet">
+    <!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+
+<!-- Firebase Config (sama dengan website utama) -->
+<script src="../firebase-config.js"></script>
+
+<!-- Admin Service -->
+<script src="admin-service.js"></script>
+
+<!-- Script utama admin -->
+<script src="script.js"></script>
+    <style>
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .login-form {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            min-width: 400px;
+        }
+        
+        .login-form h2 {
+            color: #1d3557;
+            margin-bottom: 10px;
+        }
+        
+        .login-form p {
+            color: #718096;
+            margin-bottom: 30px;
+        }
+        
+        .login-form input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .login-form input:focus {
+            outline: none;
+            border-color: #e63946;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: #e63946;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .login-btn:hover {
+            background: #c1121f;
+        }
+        
+        .error-message {
+            color: #e53e3e;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: #718096;
+            text-decoration: none;
+        }
+        
+        .back-link:hover {
+            color: #e63946;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Overlay -->
+    <div id="loginOverlay" class="login-overlay">
+        <div class="login-form">
+            <i class="fas fa-car" style="font-size: 3rem; color: #e63946; margin-bottom: 20px;"></i>
+            <h2>Admin Login</h2>
+            <p>Masukkan password untuk mengakses panel admin</p>
+            <input type="password" id="adminPassword" placeholder="Masukkan password admin">
+            <button class="login-btn" onclick="checkPassword()">Masuk</button>
+            <div id="errorMessage" class="error-message">Password salah! Coba lagi.</div>
+            <a href="../index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Kembali ke Website
+            </a>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard Content (Awalnya tersembunyi) -->
+    <div id="adminContent" style="display: none;">
+        <!-- Admin Header -->
+        <header class="admin-header">
+            <div class="admin-nav">
+                <div class="admin-logo">
+                    <h1><i class="fas fa-car"></i> LowRen Car's Admin</h1>
+                </div>
+                <div class="admin-user">
+                    <span>Admin User</span>
+                    <div class="user-dropdown">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Admin">
+                        <div class="dropdown-content">
+                            <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Admin Sidebar -->
+        <aside class="admin-sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item active">
+                        <a href="#dashboard" class="nav-link">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#vehicles" class="nav-link">
+                            <i class="fas fa-car"></i>
+                            <span>Kelola Mobil</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#bookings" class="nav-link">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Pemesanan</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#customers" class="nav-link">
+                            <i class="fas fa-users"></i>
+                            <span>Pelanggan</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#reviews" class="nav-link">
+                            <i class="fas fa-star"></i>
+                            <span>Review</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#promotions" class="nav-link">
+                            <i class="fas fa-tag"></i>
+                            <span>Promo & Diskon</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="section-header">
+                    <h2>Dashboard Overview</h2>
+                    <div class="breadcrumb">
+                        <span>Admin</span> / <span>Dashboard</span>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>48</h3>
+                            <p>Total Kendaraan</p>
+                        </div>
+                        <div class="stat-trend up">
+                            <i class="fas fa-arrow-up"></i>
+                            12%
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>156</h3>
+                            <p>Pemesanan Aktif</p>
+                        </div>
+                        <div class="stat-trend up">
+                            <i class="fas fa-arrow-up"></i>
+                            8%
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>1,247</h3>
+                            <p>Total Pelanggan</p>
+                        </div>
+                        <div class="stat-trend up">
+                            <i class="fas fa-arrow-up"></i>
+                            15%
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Rp 248Jt</h3>
+                            <p>Pendapatan Bulan Ini</p>
+                        </div>
+                        <div class="stat-trend up">
+                            <i class="fas fa-arrow-up"></i>
+                            22%
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="activity-section">
+                    <div class="section-header">
+                        <h3>Aktivitas Terbaru</h3>
+                        <button class="btn-primary">Lihat Semua</button>
+                    </div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon success">
+                                <i class="fas fa-calendar-plus"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p><strong>Andi Wijaya</strong> memesan <strong>Porsche 911 Carrera</strong></p>
+                                <span>2 menit yang lalu</span>
+                            </div>
+                            <div class="activity-amount">
+                                Rp 7.500.000
+                            </div>
+                        </div>
+
+                        <div class="activity-item">
+                            <div class="activity-icon warning">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p><strong>Sarah Putri</strong> memberikan review 5 bintang</p>
+                                <span>1 jam yang lalu</span>
+                            </div>
+                            <div class="activity-amount">
+                                <i class="fas fa-star text-warning"></i> 5.0
+                            </div>
+                        </div>
+
+                        <div class="activity-item">
+                            <div class="activity-icon primary">
+                                <i class="fas fa-car"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p>Mobil <strong>Ferrari 488 Spider</strong> telah dikembalikan</p>
+                                <span>3 jam yang lalu</span>
+                            </div>
+                            <div class="activity-amount">
+                                Selesai
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Vehicles Management Section -->
+            <section id="vehicles" class="content-section">
+                <div class="section-header">
+                    <h2>Kelola Mobil</h2>
+                    <div class="header-actions">
+                        <button class="btn-primary" id="addVehicleBtn">
+                            <i class="fas fa-plus"></i> Tambah Mobil
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Vehicles Table -->
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Mobil</th>
+                                <th>Kategori</th>
+                                <th>Harga/Hari</th>
+                                <th>Status</th>
+                                <th>Stok</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vehiclesTableBody">
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center;">
+                                        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Porsche" style="width: 50px; height: 35px; object-fit: cover; border-radius: 6px; margin-right: 12px;">
+                                        <div>
+                                            <div style="font-weight: 600;">Porsche 911 Carrera</div>
+                                            <div style="font-size: 0.8rem; color: #718096;">3.0L Twin-Turbo</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Family</td>
+                                <td>Rp 2.500.000</td>
+                                <td><span class="status-badge status-available">Tersedia</span></td>
+                                <td>8 unit</td>
+                                <td>
+                                    <div style="display: flex; gap: 8px;">
+                                        <button class="btn-sm btn-primary">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-sm btn-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Bookings Management Section -->
+            <section id="bookings" class="content-section">
+                <div class="section-header">
+                    <h2>Manajemen Pemesanan</h2>
+                </div>
+
+                <!-- Bookings Table -->
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID Booking</th>
+                                <th>Pelanggan</th>
+                                <th>Kendaraan</th>
+                                <th>Tanggal</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-weight: 600; color: #e63946;">BK001</td>
+                                <td>Andi Wijaya</td>
+                                <td>Porsche 911 Carrera</td>
+                                <td>15-18 Nov 2023</td>
+                                <td style="font-weight: 600;">Rp 7.500.000</td>
+                                <td><span class="status-badge status-available">Aktif</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Password protection
+        function checkPassword() {
+            const password = document.getElementById('adminPassword').value;
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Password default: admin123 (bisa diganti)
+            if (password === 'admin123') {
+                document.getElementById('loginOverlay').style.display = 'none';
+                document.getElementById('adminContent').style.display = 'block';
+                sessionStorage.setItem('adminAuthenticated', 'true');
+            } else {
+                errorMessage.style.display = 'block';
+                document.getElementById('adminPassword').value = '';
+                document.getElementById('adminPassword').focus();
+            }
+        }
+        
+        // Check if already authenticated
+        function checkAuth() {
+            const isAuthenticated = sessionStorage.getItem('adminAuthenticated');
+            if (isAuthenticated === 'true') {
+                document.getElementById('loginOverlay').style.display = 'none';
+                document.getElementById('adminContent').style.display = 'block';
+            }
+        }
+        
+        // Logout function
+        function logout() {
+            sessionStorage.removeItem('adminAuthenticated');
+            window.location.reload();
+        }
+        
+        // Enter key support for password
+        document.getElementById('adminPassword').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+        
+        // Check authentication on load
+        document.addEventListener('DOMContentLoaded', checkAuth);
+    </script>
+</body>
+</html>
